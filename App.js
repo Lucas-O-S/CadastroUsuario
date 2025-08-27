@@ -1,10 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import UsuarioModel from "./Models/UsuarioModel";
+
+const usuarioModel = new UsuarioModel();
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Codigo</Text>
+      <TextInput
+        onChange={text => {
+          
+        }}
+      ></TextInput>
       <StatusBar style="auto" />
     </View>
   );
