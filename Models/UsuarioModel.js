@@ -1,4 +1,4 @@
-export class Usuario {
+export default class UsuarioModel {
 
     static contador = -1;
 
@@ -7,40 +7,65 @@ export class Usuario {
     #email;
     #senha;
 
-  constructor( nome = "", email = "", senha = "") {
-    this.#id = ++Usuario.contador;
-    this.#nome = nome;
-    this.#email = email;
-    this.#senha = senha;
-    
-  }
+    constructor(nome = "", email = "", senha = "") {
+        this.#nome = nome;
+        this.#email = email;
+        this.#senha = senha;
 
-  get id() {
-    return this.#id;
-  }
+    }
 
-  get nome() {
-    return this.#nome;
-  }
+    get id() {
+        return this.#id;
+    }
 
-  get email() {
-    return this.#email;
-  }
+    get nome() {
+        return this.#nome;
+    }
 
-  get senha() {
-    return this.#senha;
-  }
+    get email() {
+        return this.#email;
+    }
 
-  set nome(nome) {
-    this.#nome = nome;
-  }
+    get senha() {
+        return this.#senha;
+    }
 
-  set email(email) {
-    this.#email = email;
-  }
+    set id(id){
+        this.#id = id
+    }
 
-  set senha(senha) {
-    this.#senha = senha;
-  }
+    set nome(nome) {
+        if(!nome){
+          throw new Error("Nome é obrigatório");
+        }
+        this.#nome = nome;
+    }
+
+    set email(email) {
+        if(!email){
+          throw new Error("Email é obrigatório");
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            throw new Error("Email inválido");
+        }
+        this.#email = email;
+    }
+
+    set senha(senha) {
+        const senhaRegex = /^(?=.*[A-Z])(?=.*\d).{5,}$/;
+        if(!senhaRegex.test(senha)){
+            throw new Error("Senha deve ter no mínimo 5 caracteres, uma letra maiúscula e um número");
+        }
+        this.#senha = senha;
+    }
+
+    Cadastrar() {
+        if (!this.#nome || !this.#email || !this.#senha) {
+            return false;
+        }
+        this.#id = ++UsuarioModel.contador;
+        return true;
+    }
 
 }
