@@ -1,6 +1,6 @@
-export default class UsuarioModel {
+import ContadorIds from "../utils/ContadorIds";
 
-    static contador = -1;
+export default class UsuarioModel {
 
     #id;
     #nome;
@@ -8,11 +8,12 @@ export default class UsuarioModel {
     #senha;
 
     constructor(nome = "", email = "", senha = "") {
-        this.#nome = nome;
-        this.#email = email;
-        this.#senha = senha;
-
+        ContadorIds.InicializarContador();
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
     }
+
 
     get id() {
         return this.#id;
@@ -60,11 +61,12 @@ export default class UsuarioModel {
         this.#senha = senha;
     }
 
-    Cadastrar() {
+    VerificarCadastro() {
         if (!this.#nome || !this.#email || !this.#senha) {
             return false;
         }
-        this.#id = ++UsuarioModel.contador;
+        this.#id = ContadorIds.contador++;
+        ContadorIds.SalvarContador();
         return true;
     }
 
