@@ -1,37 +1,36 @@
-import { StyleSheet } from 'react-native';
+// src/Styles/TelaPrincipalStyles.js
+import { StyleSheet } from "react-native";
+import BaseStyles from "./BaseStyles";
+import Colors from "./colors";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    ...BaseStyles.container,
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 30,
-    color: '#4A148C',
-    textAlign: 'center',
+    color: Colors.primary,
+    textAlign: "center",
   },
   button: {
-    backgroundColor: '#4A148C',
+    ...BaseStyles.button,
     paddingVertical: 15,
     paddingHorizontal: 25,
     borderRadius: 10,
     marginVertical: 10,
-    width: '80%',
-    alignItems: 'center',
-    shadowColor: '#000',
+    width: "80%",
+    shadowColor: Colors.shadow,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 3,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    ...BaseStyles.buttonText,
     fontSize: 18,
   },
 });

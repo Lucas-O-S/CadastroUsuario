@@ -1,10 +1,10 @@
-// src/Styles/TelaCadastroStyles.js
 import { StyleSheet } from "react-native";
-import BaseStyles from "./BaseStyles";
-import Colors from "./colors";
+import styles from "./TelaPrincipalStyles";
+import colors from "./colors";
 
-const styles = StyleSheet.create({
-  container: {
+
+const Styles = StyleSheet.create({
+      container: {
     ...BaseStyles.container,
     justifyContent: "center",
   },
@@ -29,13 +29,11 @@ const styles = StyleSheet.create({
   },
   button: {
     ...BaseStyles.button,
-    paddingVertical: 12,
-    marginTop: 10,
+
   },
   buttonText: {
     ...BaseStyles.buttonText,
-    fontSize: 16,
   },
 });
 
-export default styles;
+export default styles

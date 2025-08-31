@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import TelaInicial from "./Screens/PrincipalScreen";
 import TelaCadastro from "./Screens/CadastroScreen";
-import Listar from "./Screens/ListaScreen";
+import TelaListar from "./Screens/ListaScreen";
 
 const Stack = createNativeStackNavigator();
 
