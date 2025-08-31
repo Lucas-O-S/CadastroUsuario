@@ -1,7 +1,7 @@
 // src/Styles/TelaCadastroStyles.js
 import { StyleSheet } from "react-native";
 import BaseStyles from "./BaseStyles";
-import Colors from "./colors";
+import Colors from "./Colors";
 
 const styles = StyleSheet.create({
   container: {
