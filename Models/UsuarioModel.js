@@ -60,7 +60,7 @@ export default class UsuarioModel {
         this.#senha = senha;
     }
 
-    Cadastrar() {
+    VerificarCadastro() {
         if (!this.#nome || !this.#email || !this.#senha) {
             return false;
         }

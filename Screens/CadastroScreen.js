@@ -5,7 +5,7 @@ import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from "../Styles/TelaCadastroStyles";
 
-export default function TelaCadastroScreens() {
+export default function TelaCadastroScreens({navigation}) {
   const [codigo, setCodigo] = useState("");
   const [mostarCodigo, setMostartCodigo] = useState(false);
   const [nome, setNome] = useState("");
@@ -13,6 +13,7 @@ export default function TelaCadastroScreens() {
   const [senha, setSenha] = useState("");
   const [repetirSenha, setRepetirSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  let usuariosList = [];
 
   function LimparCampos() {
     setCodigo("");
@@ -32,17 +33,33 @@ export default function TelaCadastroScreens() {
         return;
       }
 
-      if (usuarioModel.Cadastrar()) {
+      if (usuarioModel.VerificarCadastro()) {
         const usuarioParaSalvar = {
           id: usuarioModel.id,
           nome: nome,
           email: email,
           senha: senha
         };
-        await AsyncStorage.setItem("Usuario", JSON.stringify(usuarioParaSalvar));
+
+        const jsonValue = await AsyncStorage.getItem("UsuarioList");
+        if(jsonValue){
+          usuariosList = JSON.parse(jsonValue);
+          usuariosList.push(usuarioParaSalvar);
+          usuariosList.forEach(element => {
+            console.log(element);
+          });
+
+        }
+        else{
+          usuariosList.push(usuarioParaSalvar);
+        }
+
+
+        await AsyncStorage.setItem("UsuarioList", JSON.stringify(usuariosList));
         alert("Usuário cadastrado com sucesso!");
         setCodigo(usuarioModel.id.toString());
-        setMostartCodigo(true);
+        LimparCampos()
+
       } else {
         alert("Erro ao cadastrar usuário");
       }
@@ -50,9 +67,9 @@ export default function TelaCadastroScreens() {
       alert(`Erro ao cadastrar usuário: ${error.message}`);
     }
   }
-
+/*
   async function Buscar() {
-    const jsonValue = await AsyncStorage.getItem("Usuario");
+    const jsonValue = await AsyncStorage.getItem("UsuarioList");
     if (jsonValue != null) {
       const usuarioModel = JSON.parse(jsonValue);
       setCodigo(usuarioModel.id.toString());
@@ -65,10 +82,10 @@ export default function TelaCadastroScreens() {
       alert("Usuário não encontrado");
     }
   }
-
+*/
   return (
     <View style={styles.container}>
-
+      {/*
       {mostarCodigo && (
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Código</Text>
@@ -79,7 +96,7 @@ export default function TelaCadastroScreens() {
           />
         </View>
       )}
-
+      */}
       <View style={styles.inputGroup}>
         <Text style={styles.label}>Nome</Text>
         <TextInput
@@ -144,9 +161,16 @@ export default function TelaCadastroScreens() {
         <Text style={styles.buttonText}>Limpar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={Buscar}>
-        <Text style={styles.buttonText}>Buscar</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+        <Text style={styles.buttonText}>Voltar</Text>
       </TouchableOpacity>
+
+      {/*
+        <TouchableOpacity style={styles.button} onPress={Buscar}>
+          <Text style={styles.buttonText}>Buscar</Text>
+        </TouchableOpacity>
+      */}
+
 
       <StatusBar style="auto" />
     </View>
