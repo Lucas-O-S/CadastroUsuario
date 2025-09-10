@@ -29,6 +29,7 @@ export default function TelaCadastroScreens({ navigation, route }) {
     }
 
 
+
     function RestaurarDadosAntigo() {
         setCodigo(usuarioAntigo.id || "");
         setNome(usuarioAntigo.nome || "");
@@ -40,6 +41,7 @@ export default function TelaCadastroScreens({ navigation, route }) {
     function SalvarUsuarioAntigo(){
         ///o {...} serve para criar uma copia do objeto
         setUsuarioAntigo({...usuarioModel});
+        
     }
 
     useFocusEffect(

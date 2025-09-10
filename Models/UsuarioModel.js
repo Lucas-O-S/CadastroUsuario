@@ -8,7 +8,6 @@ export default class UsuarioModel {
     #senha;
 
     constructor(nome = "", email = "", senha = "") {
-        ContadorIds.InicializarContador();
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -46,7 +45,7 @@ export default class UsuarioModel {
         if(!email){
           throw new Error("Email é obrigatório");
         }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
         if (!emailRegex.test(email)) {
             throw new Error("Email inválido");
         }

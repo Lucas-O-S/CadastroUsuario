@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import ContadorIds from "./utils/ContadorIds";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -10,6 +11,9 @@ import TelaEditar from "./Screens/EditarScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  useEffect(() => {
+    ContadorIds.InicializarContador();
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Inicial">
@@ -17,7 +21,6 @@ export default function App() {
         <Stack.Screen name="Cadastro" component={TelaCadastro} />
         <Stack.Screen name="Listar" component={TelaListar} />
         <Stack.Screen name="Editar" component={TelaEditar} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
