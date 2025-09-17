@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useCallback, useState } from 'react';
 import styles from "../Styles/TelaCadastroStyles";
 import UsuarioController from '../Controller/UsuarioController';
 import { useFocusEffect } from '@react-navigation/native';
-import UsuarioModel from '../Models/UsuarioModel';
 
 
 export default function TelaCadastroScreens({ navigation, route }) {
@@ -139,7 +138,7 @@ export default function TelaCadastroScreens({ navigation, route }) {
                                     senha
                                 };
                                 tempUser.id = Number(codigo);
-                                UsuarioController.Editar(tempUser, repetirSenha);
+                                UsuarioController.Editar(tempUser.id, tempUser, repetirSenha);
 
                             }}>
                             <Text style={styles.buttonText}>Salvar</Text>

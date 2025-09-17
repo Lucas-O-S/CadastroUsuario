@@ -1,4 +1,3 @@
-import ContadorIds from "../utils/ContadorIds";
 
 export default class UsuarioModel {
 
@@ -7,7 +6,8 @@ export default class UsuarioModel {
     #email;
     #senha;
 
-    constructor(nome = "", email = "", senha = "") {
+    constructor(id = "", nome = "", email = "", senha = "") {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -64,8 +64,6 @@ export default class UsuarioModel {
         if (!this.#nome || !this.#email || !this.#senha) {
             return false;
         }
-        this.#id = ContadorIds.contador++;
-        ContadorIds.SalvarContador();
         return true;
     }
 
