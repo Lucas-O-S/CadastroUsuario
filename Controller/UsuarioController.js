@@ -6,8 +6,10 @@ import UsuarioService from '../Service/UsuarioService';
 export default class UsuarioController{
    static async Create(nome, email, senha, repetirSenha) {
         try {
-            let usuariosList = [];
-            let usuarioModel = new UsuarioModel(nome, email, senha);
+            
+            let usuarioModel = new UsuarioModel("",nome, email, senha);
+            
+            
 
             if (senha !== repetirSenha) {
                 throw new Error("Dados estão errados");
@@ -21,17 +23,6 @@ export default class UsuarioController{
                     senha: senha
                 };
 
-                const jsonValue = await AsyncStorage.getItem("UsuarioList");
-                if(jsonValue){
-                    usuariosList = JSON.parse(jsonValue);
-                    usuariosList.push(usuarioParaSalvar);
-                    
-                    usuariosList.forEach(element => {
-                        console.log(element);
-                    });
-
-                }
-                else usuariosList.push(usuarioParaSalvar);
 
                 await UsuarioService.AdicionarUsuario(usuarioModel);
                 alert("Usuário cadastrado com sucesso!");
@@ -74,18 +65,17 @@ export default class UsuarioController{
     static async Editar(id, usuarioModelNew, repetirSenha){
         try{
 
-
-            const usuarioModel = await UsuarioService.ObterUsuarioPorId(id);
+            let usuarioModel =  UsuarioService.ObterUsuarioPorId(id);
+            console.log(usuarioModel);
 
             if (usuarioModel) {
                 if (usuarioModelNew.senha !== repetirSenha) {
                     throw new Error("Dados estão errados");
                 }
                 
-                usuarioModel = usuarioModelNew;
-                usuarioModel.id = id;
-
-                UsuarioService.AlterarUsuario(usuarioModel);
+                const novoUsuarioModel = new UsuarioModel(id, usuarioModelNew.nome, usuarioModelNew.email, usuarioModelNew.senha);
+                console.log(novoUsuarioModel);
+                await UsuarioService.AlterarUsuario(novoUsuarioModel);
                 alert("Usuário alterado com sucesso!");
                 return usuarioModel;
 
@@ -101,7 +91,7 @@ export default class UsuarioController{
 
     static async Excluir(id){
         try {
-            const value = await UsuarioService.ObterUsuarioPorId(id);
+            const value = UsuarioService.ObterUsuarioPorId(id);
             if (value) {
                 await UsuarioService.ExcluirUsuario(id);
                 alert("Usuário excluído com sucesso!");

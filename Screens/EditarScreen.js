@@ -139,7 +139,7 @@ export default function TelaCadastroScreens({ navigation, route }) {
                                     senha
                                 };
                                 tempUser.id = Number(codigo);
-                                UsuarioController.Editar(tempUser, repetirSenha);
+                                UsuarioController.Editar(tempUser.id, tempUser, repetirSenha);
 
                             }}>
                             <Text style={styles.buttonText}>Salvar</Text>
