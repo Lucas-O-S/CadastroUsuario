@@ -7,7 +7,7 @@ export default class UsuarioModel {
     #email;
     #senha;
 
-    constructor(nome = "", email = "", senha = "") {
+    constructor(id = "", nome = "", email = "", senha = "") {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
