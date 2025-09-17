@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UsuarioModel from "../Models/UsuarioModel";
+import UsuarioService from '../Service/UsuarioService';
+
+
 export default class UsuarioController{
    static async Create(nome, email, senha, repetirSenha) {
         try {
@@ -29,8 +32,8 @@ export default class UsuarioController{
 
                 }
                 else usuariosList.push(usuarioParaSalvar);
-                
-                await AsyncStorage.setItem("UsuarioList", JSON.stringify(usuariosList));
+
+                await UsuarioService.AdicionarUsuario(usuarioModel);
                 alert("Usuário cadastrado com sucesso!");
 
                 
@@ -44,11 +47,10 @@ export default class UsuarioController{
 
     static async List() {
         try{
-            const jsonValue = await AsyncStorage.getItem("UsuarioList");
-            if (jsonValue != null) {
-                const usuarioModel = JSON.parse(jsonValue);
-                return usuarioModel;
-            } else throw new Error("Lista de usuario não encontrada");
+            const values = await UsuarioService.ObterTodosUsuarios();
+            if (values != null) {
+                return values;
+            } else   throw new Error("Lista de usuario não encontrada");
             
         } catch (error) {
             alert(`Erro ao buscar usuário: ${error.message}`);
@@ -58,48 +60,40 @@ export default class UsuarioController{
 
     static async Buscar(id){
         try{
-            const jsonValue = await AsyncStorage.getItem("UsuarioList");
-            if (jsonValue != null) {
-                const usuarioList = JSON.parse(jsonValue);
-                const usuario = usuarioList.find(user => user.id === id);
-            
-                if (usuario) {
-                    return usuario;
-                }
-                
-                else throw new Error("Usuário não encontrado");
-            
-            }
-            
-            else throw new Error("Lista de usuario não encontrada");
-
+            const value = await UsuarioService.ObterUsuarioPorId(id);
+            if (value != null) {
+                return value;
+            } else throw new Error("Usuário não encontrado");
         } catch (error) {
             alert(`Erro ao buscar usuário: ${error.message}`);
-        }    
+        }
+
     }
 
-    static async Editar(usuarioModel, repetirSenha){
-        try{
-            if (usuarioModel.senha !== repetirSenha) {
-                throw new Error("Dados estão errados");
-            }
-            console.log(usuarioModel);
-            const jsonValue = await AsyncStorage.getItem("UsuarioList");
-            if (jsonValue) {
-                
-                const usuarioList = JSON.parse(jsonValue);
-                const index = usuarioList.findIndex(user => user.id === usuarioModel.id);
-                
-                if (index !== -1) {
-                    usuarioList[index] = usuarioModel;
-                    console.log(usuarioList[index]);
 
-                    await AsyncStorage.setItem("UsuarioList", JSON.stringify(usuarioList));
-                    alert("Usuário editado com sucesso!");
-                } 
-                else throw new Error("Usuário não encontrado");
+    static async Editar(id, usuarioModelNew, repetirSenha){
+        try{
+
+
+            const usuarioModel = await UsuarioService.ObterUsuarioPorId(id);
+
+            if (usuarioModel) {
+                if (usuarioModelNew.senha !== repetirSenha) {
+                    throw new Error("Dados estão errados");
+                }
+                
+                usuarioModel = usuarioModelNew;
+                usuarioModel.id = id;
+
+                UsuarioService.AlterarUsuario(usuarioModel);
+                alert("Usuário alterado com sucesso!");
+                return usuarioModel;
+
+
+
             } 
-            else throw new Error("Lista de usuario não encontrada");
+            else throw new Error("Usuario não encontrado");
+
         } catch (error) {
             alert(`Erro ao salvar usuário: ${error.message}`);
         }    
@@ -107,13 +101,10 @@ export default class UsuarioController{
 
     static async Excluir(id){
         try {
-            const jsonValue = await AsyncStorage.getItem("UsuarioList");
-            if (jsonValue) {
-                let usuarioList = JSON.parse(jsonValue);
-                usuarioList = usuarioList.filter(user => user.id !== id);
-                await AsyncStorage.setItem("UsuarioList", JSON.stringify(usuarioList));
+            const value = await UsuarioService.ObterUsuarioPorId(id);
+            if (value) {
+                await UsuarioService.ExcluirUsuario(id);
                 alert("Usuário excluído com sucesso!");
-                return usuarioList;
             }
             else throw new Error("Lista de usuario não encontrada");
         } catch (error) {

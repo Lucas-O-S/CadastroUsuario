@@ -7,12 +7,14 @@ import TelaInicial from "./Screens/PrincipalScreen";
 import TelaCadastro from "./Screens/CadastroScreen";
 import TelaListar from "./Screens/ListaScreen";
 import TelaEditar from "./Screens/EditarScreen";
+import IniciarDb from "./utils/IniciarDB";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   useEffect(() => {
     ContadorIds.InicializarContador();
+    IniciarDb.InicializarDB();
   }, []);
   return (
     <NavigationContainer>
