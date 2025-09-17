@@ -60,7 +60,7 @@ export default function TelaCadastroScreens({ navigation, route }) {
                 <Text style={styles.label}>Código</Text>
                 <TextInput
                     style={[styles.input, { backgroundColor: '#eee' }]}
-                    value={(Number.parseInt(codigo) + 1).toString()}
+                    value={(codigo).toString()}
                     editable={false}
                 />
             </View>
