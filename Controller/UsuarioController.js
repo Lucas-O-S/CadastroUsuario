@@ -15,12 +15,6 @@ export default class UsuarioController{
             }
 
             if (usuarioModel.VerificarCadastro()) {
-                const usuarioParaSalvar = {
-                    id: usuarioModel.id,
-                    nome: nome,
-                    email: email,
-                    senha: senha
-                };
 
 
                 await UsuarioService.AdicionarUsuario(usuarioModel);
