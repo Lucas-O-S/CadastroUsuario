@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import ContadorIds from "./utils/ContadorIds";
+import { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -13,7 +12,6 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   useEffect(() => {
-    ContadorIds.InicializarContador();
     IniciarDb.InicializarDB();
   }, []);
   return (
